@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>User Information</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{{ url_for('index') }}">Academic Tree</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    {% if session.user_id %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('edit_profile') }}"><strong>{{ session.user_name
+                                }}</strong> (ID: {{ session.user_id }})</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+
+        <h1 class="mt-5">User Information</h1>
+
+        <div class="mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.name }}</h5>
+                    <p class="card-text">ID: {{ user.id }}</p>
+                    <p class="card-text">Major: {{ user.major or '-' }}</p>
+                    <p class="card-text">Google Scholar Link: {{ user.google_scholar_link or '-' }}</p>
+                    <a class="btn btn-primary" href="{{ url_for('index') }}">Back to Home</a>
+                </div>
+            </div>
+        </div>
+        <!-- teachers -->
+        <div class="mt-4">
+            <h2>Teachers of {{ user.name }}</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Major</th>
+                        <th>Google Scholar Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if teachers %}
+                    {% for teacher in teachers %}
+                    <tr>
+                        <td>{{ teacher.id }}</td>
+                        <td>{{ teacher.name }}</td>
+                        <td>{{ teacher.major }}</td>
+                        <td><a href="{{ teacher.google_scholar_link }}" target="_blank">{{ teacher.google_scholar_link
+                                }}</a></td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No Teachers</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- students -->
+        <div class="mt-4">
+            <h2>Students of {{ user.name }}</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Major</th>
+                        <th>Google Scholar Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if students %}
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.id }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.major }}</td>
+                        <td><a href="{{ student.google_scholar_link }}" target="_blank">{{ student.google_scholar_link
+                                }}</a></td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No Students</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <!-- fellow apprentices -->
+        <div class="mt-4">
+            <h2>Fellow apprentices of {{ user.name }}</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Major</th>
+                        <th>Google Scholar Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if fellows %}
+                    {% for fellow in fellows %}
+                    <tr>
+                        <td>{{ fellow.id }}</td>
+                        <td>{{ fellow.name }}</td>
+                        <td>{{ fellow.major }}</td>
+                        <td><a href="{{ fellow.google_scholar_link }}" target="_blank">{{ fellow.google_scholar_link
+                                }}</a></td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No fellow apprentices</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
